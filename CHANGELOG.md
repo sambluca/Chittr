@@ -2,5 +2,5 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
-| 0.0.2   | Landing page and basic login system working                                            |
+| 0.1.0   | Landing page and login and sign up system working                                            |
 | 0.0.1   | Set up project with readme, tests, linting and basic view                              |
