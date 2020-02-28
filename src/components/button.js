@@ -6,23 +6,23 @@ import {
 const {
   buttonStyle, buttonTextStyle,
 } = StyleSheet.create({
-  buttonStyle: {
+  buttonStyle: ({ width }) => ({
     paddingTop: 20,
-    width: 250,
+    width,
     paddingBottom: 20,
     fontWeight: 'bold',
     alignItems: 'center',
     backgroundColor: '#DDDDDD',
-  },
+  }),
   buttonTextStyle: {
     fontWeight: 'bold',
     fontSize: 20,
   },
 });
 
-const Button = ({ buttonText, onPress }) => (
+const Button = ({ buttonText, onPress, width = 250 }) => (
   <TouchableOpacity
-    style={buttonStyle}
+    style={buttonStyle({ width })}
     onPress={onPress}
   >
     <Text style={buttonTextStyle}>{buttonText}</Text>

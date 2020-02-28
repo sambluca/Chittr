@@ -4,7 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { UserContextProvider, UserContextConsumer } from './context/signedIn';
-import { LandingScreen, Chits, Login } from './pages';
+import {
+  LandingScreen, Chits, Login, SignUp,
+} from './pages';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -22,6 +24,7 @@ const SignUpSignIn = () => (
   <Stack.Navigator headerMode="none">
     <Stack.Screen name="Landing Screen" component={LandingScreen} />
     <Stack.Screen name="Login" component={Login} />
+    <Stack.Screen name="SignUp" component={SignUp} />
   </Stack.Navigator>
 );
 

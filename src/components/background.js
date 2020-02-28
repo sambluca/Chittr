@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
 const { containerStyle } = StyleSheet.create({
   containerStyle: {
@@ -9,9 +9,9 @@ const { containerStyle } = StyleSheet.create({
 });
 
 const Background = ({ children }) => (
-  <View style={containerStyle}>
+  <ScrollView style={containerStyle}>
     {children}
-  </View>
+  </ScrollView>
 
 );
 

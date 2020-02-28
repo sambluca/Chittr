@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  View, StyleSheet, Alert,
+  View, StyleSheet,
 } from 'react-native';
 import {
   TextLogo, Background, Button, CentreView,
@@ -34,7 +34,7 @@ const LandingScreen = ({ navigation }) => (
       <View style={buttonContainerStyle}>
         <Button
           buttonText="Sign Up"
-          onPress={() => Alert.alert('Button with adjusted color pressed')}
+          onPress={() => navigation.push('SignUp')}
         />
       </View>
     </CentreView>

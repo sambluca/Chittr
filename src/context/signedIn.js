@@ -14,7 +14,7 @@ class UserContextProvider extends Component {
     this.signUserIn = this.signUserIn.bind(this);
   }
 
-  signUserIn(signedInToken) {
+  signUserIn({ signedInToken }) {
     this.setState({
       userSignedIn: true,
       signedInToken,

@@ -17,8 +17,10 @@ const { textInputStyle } = StyleSheet.create({
   },
 });
 
-const FormInput = ({ value, stateChange, secureTextEntry = false }) => (
-  <TextInput style={textInputStyle} value={value} onChangeText={(text) => stateChange(text)} secureTextEntry={secureTextEntry} />
+const FormInput = ({
+  value, stateChange, secureTextEntry = false, autoCapitalize = 'sentences',
+}) => (
+  <TextInput style={textInputStyle} value={value} onChangeText={(text) => stateChange(text)} secureTextEntry={secureTextEntry} autoCapitalize={autoCapitalize} />
 );
 
 export default FormInput;

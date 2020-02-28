@@ -34,10 +34,10 @@ const loginRequest = ({
     password,
   }),
 }).then((res) => res.json())
-  .then((res) => signUserIn(res.token))
+  .then((res) => signUserIn({ signedInToken: res.token }))
   .catch(() => setError(true));
 
-const LandingScreen = () => {
+const Login = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
@@ -55,7 +55,7 @@ const LandingScreen = () => {
                 <InputLabel labelText="Email" />
                 <FormInput value={email} stateChange={setEmail} />
                 <InputLabel labelText="Password" />
-                <FormInput value={password} stateChange={setPassword} secureTextEntry />
+                <FormInput value={password} stateChange={setPassword} secureTextEntry autoCapitalize="none" />
                 {error && <InputLabel labelText="Invalid email/password" color="red" />}
               </View>
               <Button
@@ -63,6 +63,11 @@ const LandingScreen = () => {
                 onPress={() => loginRequest({
                   email, password, setError, signUserIn,
                 })}
+              />
+              <InputLabel labelText="Not a Member?" />
+              <Button
+                buttonText="Sign Up!"
+                onPress={() => navigation.push('SignUp')}
               />
             </View>
           </CentreView>
@@ -72,4 +77,4 @@ const LandingScreen = () => {
   );
 };
 
-export default LandingScreen;
+export default Login;
