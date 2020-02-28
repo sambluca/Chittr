@@ -11,6 +11,8 @@ module.exports = {
   ],
   rules: {
     'react/jsx-filename-extension': [1, {extensions: ['.js', '.jsx']}],
+    'react/prop-types': 'off',
+    'max-len': 'off'
   },
   env: {
     jest: true,
@@ -22,4 +24,7 @@ module.exports = {
     '.prettierrc.js',
     '.eslint.js',
   ],
+  globals: {
+    fetch: false
+  }
 };
