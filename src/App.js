@@ -3,19 +3,69 @@ import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { UserContextProvider, UserContextConsumer } from './context/signedIn';
 import {
-  LandingScreen, Chits, Login, SignUp, Loading,
+  LandingScreen,
+  Chits,
+  Login,
+  SignUp,
+  Loading,
+  Search,
+  Profile,
+  PostChit,
 } from './pages';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const Chittr = () => (
-  <Tab.Navigator>
+  <Tab.Navigator
+    initialRouteName="Chits"
+    tabBarOptions={{
+      activeTintColor: 'black',
+    }}
+  >
     <Tab.Screen
       name="Chits"
       component={Chits}
+      options={{
+        tabBarLabel: 'Chits',
+        tabBarIcon: ({ focused, size }) => (
+          <CommunityIcon name="home" color={focused ? '#FFD22F' : '#8E8E8F'} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Search"
+      component={Search}
+      options={{
+        tabBarLabel: 'Profile',
+        tabBarIcon: ({ focused, size }) => (
+          <MaterialIcon name="search" color={focused ? '#FFD22F' : '#8E8E8F'} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Profile"
+      component={Profile}
+      options={{
+        tabBarLabel: 'Profile',
+        tabBarIcon: ({ focused, size }) => (
+          <CommunityIcon name="account" color={focused ? '#FFD22F' : '#8E8E8F'} size={size} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Post Chit"
+      component={PostChit}
+      options={{
+        tabBarLabel: 'Post Chit',
+        tabBarIcon: ({ focused, size }) => (
+          <CommunityIcon name="plus-circle" color={focused ? '#FFD22F' : '#8E8E8F'} size={size} />
+        ),
+      }}
     />
   </Tab.Navigator>
 );
@@ -34,7 +84,6 @@ const LoadingScreen = () => (
   </Stack.Navigator>
 );
 
-
 const app = () => (
   <UserContextProvider>
     <NavigationContainer>
@@ -44,7 +93,7 @@ const app = () => (
             return <LoadingScreen />;
           }
 
-          return (userSignedIn ? <Chittr /> : <SignUpSignIn />);
+          return userSignedIn ? <Chittr /> : <SignUpSignIn />;
         }}
       </UserContextConsumer>
     </NavigationContainer>
