@@ -22,7 +22,7 @@ const signUpRequest = ({
     password,
   }),
 }).then((res) => res.json())
-  .catch(() => ({
+  .catch((err) => console.log(err) || ({
     signUpError: true,
   }));
 
@@ -39,7 +39,7 @@ const loginRequest = ({
     password,
   }),
 }).then((res) => res.json())
-  .then((res) => signUserIn({ signedInToken: res.token }));
+  .then((res) => signUserIn({ signedInToken: res.token, userId: res.id }));
 
 const {
   formContainer,
@@ -105,7 +105,7 @@ const SignUpPassword = ({
                   const { signUpError = false } = await signUpRequest({
                     email, password, firstName, lastName,
                   });
-
+                  console.log('signUpError?', signUpError);
                   if (!signUpError) {
                     loginRequest({ email, password, signUserIn });
                   }

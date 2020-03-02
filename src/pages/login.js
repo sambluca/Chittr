@@ -34,7 +34,7 @@ const loginRequest = ({
     password,
   }),
 }).then((res) => res.json())
-  .then((res) => signUserIn({ signedInToken: res.token }))
+  .then((res) => signUserIn({ signedInToken: res.token, userId: res.id }))
   .catch(() => setError(true));
 
 const Login = ({ navigation }) => {

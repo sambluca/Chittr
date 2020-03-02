@@ -5,7 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { UserContextProvider, UserContextConsumer } from './context/signedIn';
 import {
-  LandingScreen, Chits, Login, SignUp,
+  LandingScreen, Chits, Login, SignUp, Loading,
 } from './pages';
 
 const Stack = createStackNavigator();
@@ -28,11 +28,24 @@ const SignUpSignIn = () => (
   </Stack.Navigator>
 );
 
+const LoadingScreen = () => (
+  <Stack.Navigator headerMode="none">
+    <Stack.Screen name="Loading" component={Loading} />
+  </Stack.Navigator>
+);
+
+
 const app = () => (
   <UserContextProvider>
     <NavigationContainer>
       <UserContextConsumer>
-        {({ userSignedIn }) => (userSignedIn ? <Chittr /> : <SignUpSignIn />)}
+        {({ readingFromStorage, userSignedIn }) => {
+          if (readingFromStorage) {
+            return <LoadingScreen />;
+          }
+
+          return (userSignedIn ? <Chittr /> : <SignUpSignIn />);
+        }}
       </UserContextConsumer>
     </NavigationContainer>
   </UserContextProvider>
