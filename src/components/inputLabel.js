@@ -4,14 +4,14 @@ import {
 } from 'react-native';
 
 const { labelStyle } = StyleSheet.create({
-  labelStyle: ({ color = 'grey' }) => ({
-    fontSize: 20,
+  labelStyle: ({ color = 'grey', fontSize = 20 }) => ({
+    fontSize,
     color,
   }),
 });
 
-const Label = ({ labelText, color }) => (
-  <Text style={labelStyle({ color })}>{labelText}</Text>);
+const Label = ({ labelText, color, fontSize }) => (
+  <Text style={labelStyle({ color, fontSize })}>{labelText}</Text>);
 
 
 export default Label;

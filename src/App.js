@@ -41,7 +41,7 @@ const Chittr = () => (
       name="Search"
       component={Search}
       options={{
-        tabBarLabel: 'Profile',
+        tabBarLabel: 'Search',
         tabBarIcon: ({ focused, size }) => (
           <MaterialIcon name="search" color={focused ? '#FFD22F' : '#8E8E8F'} size={size} />
         ),

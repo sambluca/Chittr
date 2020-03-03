@@ -5,7 +5,7 @@ import SignUp from './sign-up';
 import Loading from './loading';
 import Search from './search';
 import PostChit from './post-chit';
-import Profile from './profile';
+import Profile from './profile-page';
 
 
 export {

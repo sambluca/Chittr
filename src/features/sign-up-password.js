@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import {
   View, StyleSheet,
 } from 'react-native';
-import Button from './button';
-import InputLabel from './inputLabel';
-import FormInput from './formInput';
+import Button from '../components/button';
+import InputLabel from '../components/inputLabel';
+import FormInput from '../components/formInput';
 import { hostname } from '../config';
 import { UserContextConsumer } from '../context/signedIn';
 

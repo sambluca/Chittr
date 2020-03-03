@@ -15,6 +15,7 @@ const storeData = ({ signedInToken, userId }) => {
   );
 };
 
+const removeData = () => AsyncStorage.removeItem('@Chittr:signedInToken');
 class UserContextProvider extends Component {
   constructor() {
     super();
@@ -27,6 +28,7 @@ class UserContextProvider extends Component {
     };
 
     this.signUserIn = this.signUserIn.bind(this);
+    this.signUserOut = this.signUserOut.bind(this);
     this.checkUserSignedIn = this.checkUserSignedIn.bind(this);
   }
 
@@ -59,6 +61,14 @@ class UserContextProvider extends Component {
       });
   }
 
+  signUserOut() {
+    removeData().then(() => this.setState({
+      userSignedIn: false,
+      signedInToken: null,
+      userId: '',
+    }));
+  }
+
   render() {
     const {
       userSignedIn, signedInToken, userId, readingFromStorage,
@@ -72,8 +82,8 @@ class UserContextProvider extends Component {
           userSignedIn,
           signedInToken,
           userId,
-          checkUserSignedIn: this.checkUserSignedIn,
           readingFromStorage,
+          signUserOut: this.signUserOut,
         }}
       >
         {children}

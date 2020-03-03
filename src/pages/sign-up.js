@@ -3,8 +3,9 @@ import {
   View, StyleSheet,
 } from 'react-native';
 import {
-  TextLogo, Background, SignUpIdentifier, CentreView, SignUpPassword,
+  TextLogo, Background, CentreView,
 } from '../components';
+import { SignUpPassword, SignUpIdentifier } from '../features';
 
 const {
   textLogoContainerStyle,
