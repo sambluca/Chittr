@@ -24,11 +24,13 @@ const { containerStyle } = StyleSheet.create({
   },
 });
 
-const ProfileInformation = ({ signedInToken, signUserOut, switchToSettings }) => (
+const ProfileButtons = ({
+  signedInToken, signUserOut, switchToSettings, switchText = 'Edit Profile',
+}) => (
   <View style={containerStyle}>
-    <Button width={150} onPress={switchToSettings} buttonText="Edit Profile" />
-    <Button width={150} onPress={() => logoutRequest({ signedInToken, signUserOut })} buttonText="Logout" />
+    <Button width={150} onPress={switchToSettings} buttonText={switchText} backgroundColor="#FFD22F" />
+    <Button width={150} onPress={() => logoutRequest({ signedInToken, signUserOut })} buttonText="Logout" backgroundColor="#FFD22F" />
   </View>
 );
 
-export default ProfileInformation;
+export default ProfileButtons;

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import {
   View,
 } from 'react-native';
-import { Button } from '../components';
-import { ProfileHeader, ProfileInformation, SettingsButtons } from '../features';
+import { ProfileHeader, ProfileInformation, ProfileButtons } from '../features';
 import { hostname } from '../config';
 
 class Profile extends Component {
@@ -47,14 +46,16 @@ class Profile extends Component {
 
 
   render() {
-    const { userId, signedInToken, signUserOut, switchToSettings } = this.props;
+    const {
+      userId, signedInToken, signUserOut, switchToSettings,
+    } = this.props;
     const { userData } = this.state;
 
     return (
       <View>
         <ProfileHeader userId={userId} signedInToken={signedInToken} signUserOut={signUserOut} userData={userData} />
         <ProfileInformation userData={userData} />
-        <SettingsButtons signedInToken={signedInToken} signUserOut={signUserOut} switchToSettings={switchToSettings} />
+        <ProfileButtons signedInToken={signedInToken} signUserOut={signUserOut} switchToSettings={switchToSettings} />
       </View>
 
     );

@@ -13,14 +13,16 @@ const { containerStyle, profilePictureStyle } = StyleSheet.create({
     marginHorizontal: 30,
   },
   profilePictureStyle: {
-    borderColor: 'black',
-    borderWidth: 4,
+    borderColor: '#FFD22F',
+    borderWidth: 3,
     width: 180,
     height: 180,
   },
 });
 
-const ProfileHeader = ({ signedInToken, userId, userData }) => {
+const ProfileHeader = ({
+  signedInToken, userId, userData,
+}) => {
   const { firstName, lastName } = userData;
   const source = {
     uri: `${hostname}/user/${userId}/photo`,
@@ -33,9 +35,9 @@ const ProfileHeader = ({ signedInToken, userId, userData }) => {
 
   return (
     <View style={{
-      borderBottomColor: 'grey',
+      borderBottomColor: '#FFD22F',
       paddingBottom: 10,
-      borderBottomWidth: 1,
+      borderBottomWidth: 2,
     }}
     >
       <View style={containerStyle}>
