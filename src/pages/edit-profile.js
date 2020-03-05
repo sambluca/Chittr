@@ -123,7 +123,9 @@ class EditProfile extends Component {
   }
 
   render() {
-    const { signedInToken, userId, switchToSettings } = this.props;
+    const {
+      signedInToken, userId, switchToSettings, setCamera, showCamera,
+    } = this.props;
     const {
       firstName: { text: firstNameValue, placeholder: firstNamePlaceholder },
       lastName: { text: lastNameValue, placeholder: lastNamePlaceholder },
@@ -163,7 +165,7 @@ class EditProfile extends Component {
           autoCapitalize="none"
           secureTextEntry
         />
-        <ImageEdit signedInToken={signedInToken} userId={userId} text="Profile Picture" />
+        <ImageEdit signedInToken={signedInToken} userId={userId} text="Profile Picture" setCamera={setCamera} showCamera={showCamera} />
         <SettingButtons
           switchToSettings={switchToSettings}
           saveChanges={this.saveChanges}

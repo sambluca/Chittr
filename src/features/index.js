@@ -7,6 +7,7 @@ import SettingButtons from './setting-buttons';
 import Header from './header';
 import TextEdit from './text-edit';
 import ImageEdit from './image-edit';
+import Camera from './camera';
 
 
 export {
@@ -19,4 +20,5 @@ export {
   TextEdit,
   SettingButtons,
   ImageEdit,
+  Camera,
 };

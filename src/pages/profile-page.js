@@ -1,43 +1,69 @@
 import React, { useState } from 'react';
-import { ScrollView, StyleSheet } from 'react-native';
+import { ScrollView } from 'react-native';
 import { UserContextConsumer } from '../context/signedIn';
-import { Header } from '../features';
+import { Header, Camera } from '../features';
 import Profile from './profile';
 import EditProfile from './edit-profile';
+import { hostname } from '../config';
 
-const { containerStyle } = StyleSheet.create({
-  containerStyle: {},
-});
 
+const postPhoto = async ({ image, signedInToken }) => {
+  await fetch(`${hostname}/user/photo`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'image/jpeg',
+      'X-Authorization': signedInToken,
+
+    },
+    body: image,
+  });
+};
 const ProfilePage = () => {
   const [settings, setSettings] = useState(false);
-
+  const [showCamera, setCamera] = useState(false);
   const switchToSettings = () => {
     setSettings(!settings);
   };
 
   return (
     <UserContextConsumer>
-      {({ userId, signedInToken, signUserOut }) => (
-        <ScrollView style={containerStyle}>
-          <Header />
-          {settings ? (
-            <EditProfile
-              userId={userId}
-              signedInToken={signedInToken}
-              signUserOut={signUserOut}
-              switchToSettings={switchToSettings}
-            />
-          ) : (
-            <Profile
-              userId={userId}
-              signedInToken={signedInToken}
-              signUserOut={signUserOut}
-              switchToSettings={switchToSettings}
-            />
-          )}
-        </ScrollView>
-      )}
+      {({ userId, signedInToken, signUserOut }) => {
+        const component = settings ? (
+          <EditProfile
+            userId={userId}
+            signedInToken={signedInToken}
+            signUserOut={signUserOut}
+            switchToSettings={switchToSettings}
+            setCamera={setCamera}
+            showCamera={showCamera}
+          />
+        ) : (
+          <Profile
+            userId={userId}
+            signedInToken={signedInToken}
+            signUserOut={signUserOut}
+            switchToSettings={switchToSettings}
+          />
+        );
+
+        const onPictureTake = ({ image }) => {
+          postPhoto({ image, signedInToken });
+          setCamera(!showCamera);
+        };
+
+        return showCamera ? (
+          <Camera
+            setCamera={setCamera}
+            showCamera={showCamera}
+            onPictureTake={onPictureTake}
+          />
+        ) : (
+          <ScrollView>
+            <Header />
+            {component}
+          </ScrollView>
+        );
+      }}
     </UserContextConsumer>
   );
 };

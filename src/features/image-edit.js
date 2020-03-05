@@ -3,7 +3,6 @@ import {
   View, StyleSheet, Text, Image, TouchableOpacity,
 } from 'react-native';
 import { hostname } from '../config';
-import { Button } from '../components';
 
 const {
   containerStyle,
@@ -19,10 +18,7 @@ const {
     borderWidth: 3,
     width: 180,
     height: 180,
-  },
-  imageContainerStyle: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    transform: [{ rotate: '90deg' }],
   },
   textContainerStyle: {
     position: 'absolute',
@@ -37,9 +33,11 @@ const {
   },
 });
 
-const Header = ({ signedInToken, userId, text }) => {
+const ImageEdit = ({
+  signedInToken, userId, setCamera, showCamera,
+}) => {
   const source = {
-    uri: `${hostname}/user/${userId}/photo`,
+    uri: `${hostname}/user/${userId}/photo?${Math.random()}`,
     method: 'GET',
     headers: {
       'Content-Type': 'image/jpeg',
@@ -49,8 +47,7 @@ const Header = ({ signedInToken, userId, text }) => {
 
   return (
     <View style={containerStyle}>
-      <Text>{text}</Text>
-      <TouchableOpacity onPress={() => console.log('edit')}>
+      <TouchableOpacity onPress={() => setCamera(!showCamera)}>
         <Image style={profilePictureStyle} source={source} />
         <View style={textContainerStyle}>
           <Text style={{ color: 'white' }}>Click me to edit</Text>
@@ -60,4 +57,4 @@ const Header = ({ signedInToken, userId, text }) => {
   );
 };
 
-export default Header;
+export default ImageEdit;

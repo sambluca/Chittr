@@ -17,6 +17,7 @@ const { containerStyle, profilePictureStyle } = StyleSheet.create({
     borderWidth: 3,
     width: 180,
     height: 180,
+    transform: [{ rotate: '90deg' }],
   },
 });
 
@@ -25,7 +26,7 @@ const ProfileHeader = ({
 }) => {
   const { firstName, lastName } = userData;
   const source = {
-    uri: `${hostname}/user/${userId}/photo`,
+    uri: `${hostname}/user/${userId}/photo?${Math.random()}`,
     method: 'GET',
     headers: {
       'Content-Type': 'image/jpeg',
@@ -47,6 +48,7 @@ const ProfileHeader = ({
         </View>
         <Image
           style={profilePictureStyle}
+          key={source.uri}
           source={source}
         />
       </View>

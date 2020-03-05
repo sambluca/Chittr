@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 0.5.0   | Able to change profile picture from camera                                             |
 | 0.4.0   | Edit user data page                                                                    |
 | 0.3.1   | Keyboard should not move nav                                                           |
 | 0.3.0   | Profile page                                                                           |
