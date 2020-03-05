@@ -30,7 +30,7 @@ const Input = ({
 
   />
 );
-const Header = ({
+const TextEdit = ({
   value,
   stateChange,
   field,
@@ -52,4 +52,4 @@ const Header = ({
   </View>
 );
 
-export default Header;
+export default TextEdit;

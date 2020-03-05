@@ -8,7 +8,7 @@ import Header from './header';
 import TextEdit from './text-edit';
 import ImageEdit from './image-edit';
 import Camera from './camera';
-
+import IconRow from './icon-row';
 
 export {
   SignUpIdentifier,
@@ -21,4 +21,5 @@ export {
   SettingButtons,
   ImageEdit,
   Camera,
+  IconRow,
 };
