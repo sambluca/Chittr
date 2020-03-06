@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import {
-  View,
+  ScrollView,
 } from 'react-native';
-import { ProfileHeader, ProfileInformation, ProfileButtons } from '../features';
+import {
+  Header, ProfileHeader, ProfileInformation, ProfileButtons,
+} from '../features';
 import { hostname } from '../config';
 
 class Profile extends Component {
@@ -52,11 +54,12 @@ class Profile extends Component {
     const { userData } = this.state;
 
     return (
-      <View>
+      <ScrollView>
+        <Header />
         <ProfileHeader userId={userId} signedInToken={signedInToken} signUserOut={signUserOut} userData={userData} />
         <ProfileInformation userData={userData} />
         <ProfileButtons signedInToken={signedInToken} signUserOut={signUserOut} switchToSettings={switchToSettings} />
-      </View>
+      </ScrollView>
 
     );
   }

@@ -2,7 +2,6 @@ import React from 'react';
 import {
   View, StyleSheet, Text, Image, TouchableOpacity,
 } from 'react-native';
-import { hostname } from '../config';
 
 const {
   containerStyle,
@@ -34,27 +33,17 @@ const {
 });
 
 const ImageEdit = ({
-  signedInToken, userId, setCamera, showCamera,
-}) => {
-  const source = {
-    uri: `${hostname}/user/${userId}/photo?${Math.random()}`,
-    method: 'GET',
-    headers: {
-      'Content-Type': 'image/jpeg',
-      'X-Authorization': signedInToken,
-    },
-  };
+  setCamera, showCamera, source,
+}) => (
+  <View style={containerStyle}>
+    <TouchableOpacity onPress={() => setCamera(!showCamera)}>
+      <Image style={profilePictureStyle} source={source} />
+      <View style={textContainerStyle}>
+        <Text style={{ color: 'white' }}>Click me to edit</Text>
+      </View>
+    </TouchableOpacity>
+  </View>
+);
 
-  return (
-    <View style={containerStyle}>
-      <TouchableOpacity onPress={() => setCamera(!showCamera)}>
-        <Image style={profilePictureStyle} source={source} />
-        <View style={textContainerStyle}>
-          <Text style={{ color: 'white' }}>Click me to edit</Text>
-        </View>
-      </TouchableOpacity>
-    </View>
-  );
-};
 
 export default ImageEdit;
