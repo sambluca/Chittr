@@ -6,7 +6,6 @@ import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const { containerStyle, buttonStyle } = StyleSheet.create({
   containerStyle: {
-    marginTop: 50,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -18,10 +17,10 @@ const { containerStyle, buttonStyle } = StyleSheet.create({
   },
 });
 
-const IconRow = ({ postChit }) => (
+const IconRow = ({ postChit, setCamera }) => (
   <View style={containerStyle}>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-      <TouchableOpacity style={buttonStyle}>
+      <TouchableOpacity style={buttonStyle} onPress={setCamera}>
         <CommunityIcon name="camera" size={50} />
       </TouchableOpacity>
       <Text>Camera</Text>

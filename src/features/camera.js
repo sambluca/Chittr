@@ -69,7 +69,7 @@ class Camera extends PureComponent {
       const { uri } = data;
       fetch(uri)
         .then((res) => res.blob())
-        .then((res) => onPictureTake({ image: res }));
+        .then((res) => onPictureTake({ image: res, uri }));
     }
   };
 
