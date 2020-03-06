@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import {
-  View, ScrollView, TextInput, StyleSheet, Image,
+  View,
+  ScrollView,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
 } from 'react-native';
+import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Header, IconRow, Camera } from '../features';
 import { UserContextConsumer } from '../context/signedIn';
 import { hostname } from '../config';
@@ -12,13 +18,17 @@ const postPhoto = async ({ image, signedInToken, chitId }) => {
     headers: {
       'Content-Type': 'image/jpeg',
       'X-Authorization': signedInToken,
-
     },
     body: image,
   });
 };
 
-const { containerStyle, textInputStyle, pictureStyle } = StyleSheet.create({
+const {
+  containerStyle,
+  textInputStyle,
+  pictureStyle,
+  exitContainerStyle,
+} = StyleSheet.create({
   containerStyle: {
     marginTop: 10,
     marginHorizontal: 30,
@@ -37,6 +47,16 @@ const { containerStyle, textInputStyle, pictureStyle } = StyleSheet.create({
     borderWidth: 1,
     fontSize: 20,
     marginBottom: 15,
+  },
+  exitContainerStyle: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'grey',
+    opacity: 0.8,
+    padding: 10,
   },
 });
 
@@ -59,7 +79,6 @@ class NewChit extends Component {
     this.setCamera = this.setCamera.bind(this);
     this.onPictureTake = this.onPictureTake.bind(this);
   }
-
 
   onPictureTake({ image, uri }) {
     this.setState({
@@ -116,20 +135,28 @@ class NewChit extends Component {
           user_id: userId,
         },
       }),
-    }).then((res) => res.json()).then((res) => {
-      const chitId = res.chit_id;
-      const { image: { imageData, addedImage } } = this.state;
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        const chitId = res.chit_id;
+        const {
+          image: { imageData, addedImage },
+        } = this.state;
 
-      if (addedImage) {
-        postPhoto({ image: imageData, signedInToken, chitId });
-      }
+        if (addedImage) {
+          postPhoto({ image: imageData, signedInToken, chitId });
+        }
 
-      this.reset();
-    });
+        this.reset();
+      });
   }
 
   render() {
-    const { inputValue, showCamera, image: { imageUri, addedImage } } = this.state;
+    const {
+      inputValue,
+      showCamera,
+      image: { imageUri, addedImage },
+    } = this.state;
 
     return (
       <UserContextConsumer>
@@ -153,16 +180,33 @@ class NewChit extends Component {
                 onChangeText={this.setInputValue}
                 placeholder="Write a Chit..."
               />
-              {addedImage && <Image style={pictureStyle} source={{ uri: imageUri }} />}
-              <IconRow postChit={() => this.postChit({ signedInToken, userId })} setCamera={this.setCamera} />
+              {addedImage && (
+              <View>
+                <Image style={pictureStyle} source={{ uri: imageUri }} />
+                <TouchableOpacity
+                  onPress={() => this.setState({
+                    image: {
+                      imageData: null,
+                      addedImage: false,
+                      imageUri: null,
+                    },
+                  })}
+                  style={exitContainerStyle}
+                >
+                  <CommunityIcon name="close" color="white" size={30} />
+                </TouchableOpacity>
+              </View>
+              )}
+              <IconRow
+                postChit={() => this.postChit({ signedInToken, userId })}
+                setCamera={this.setCamera}
+              />
             </View>
           </ScrollView>
-        )
-        )}
+        ))}
       </UserContextConsumer>
     );
   }
 }
-
 
 export default NewChit;

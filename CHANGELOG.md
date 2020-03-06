@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 0.7.2   | Remove image from post new chit on button press                                        |
 | 0.7.1   | Swap to camera no longer removes EditProfile state                                     |
 | 0.7.0   | Attach photo to chit and post                                                          |
 | 0.6.0   | Post chit first pass                                                                   |
