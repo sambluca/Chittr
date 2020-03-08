@@ -9,6 +9,7 @@ import TextEdit from './text-edit';
 import ImageEdit from './image-edit';
 import Camera from './camera';
 import IconRow from './icon-row';
+import Chits from './chits';
 
 export {
   SignUpIdentifier,
@@ -22,4 +23,5 @@ export {
   ImageEdit,
   Camera,
   IconRow,
+  Chits,
 };

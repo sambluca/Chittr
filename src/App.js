@@ -8,7 +8,7 @@ import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { UserContextProvider, UserContextConsumer } from './context/signedIn';
 import {
   LandingScreen,
-  Chits,
+  ChitFeed,
   Login,
   SignUp,
   Loading,
@@ -22,14 +22,14 @@ const Tab = createBottomTabNavigator();
 
 const Chittr = () => (
   <Tab.Navigator
-    initialRouteName="Chits"
+    initialRouteName="ChitFeed"
     tabBarOptions={{
       activeTintColor: 'black',
     }}
   >
     <Tab.Screen
-      name="Chits"
-      component={Chits}
+      name="ChitFeed"
+      component={ChitFeed}
       options={{
         tabBarLabel: 'Chits',
         tabBarIcon: ({ focused, size }) => (

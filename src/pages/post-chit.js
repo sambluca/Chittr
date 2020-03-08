@@ -115,7 +115,7 @@ class NewChit extends Component {
         imageUri: null,
       },
     });
-    navigation.navigate('Chits');
+    navigation.navigate('ChitFeed');
   }
 
   postChit({ signedInToken, userId }) {

@@ -1,5 +1,5 @@
 import LandingScreen from './landing-screen';
-import Chits from './chits';
+import ChitFeed from './chit-feed';
 import Login from './login';
 import SignUp from './sign-up';
 import Loading from './loading';
@@ -10,7 +10,7 @@ import Profile from './profile-page';
 
 export {
   LandingScreen,
-  Chits,
+  ChitFeed,
   Login,
   SignUp,
   Loading,
