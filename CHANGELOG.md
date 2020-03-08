@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 0.8.1   | Delete commented out code                                                              |
 | 0.8.0   | Added home page chit feed                                                              |
 | 0.7.2   | Remove image from post new chit on button press                                        |
 | 0.7.1   | Swap to camera no longer removes EditProfile state                                     |

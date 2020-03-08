@@ -14,17 +14,4 @@ const ChitFeed = () => (
   </UserContextConsumer>
 );
 
-// const ChitFeed = () => (
-//   <UserContextConsumer>
-//     {({ signedInToken }) => {
-//       console.log('signedInToken', signedInToken);
-//       return (
-//         <View>
-//           <Text>ChitFeed</Text>
-//         </View>
-//       );
-//     }}
-//   </UserContextConsumer>
-// );
-
 export default ChitFeed;
