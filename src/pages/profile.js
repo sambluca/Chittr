@@ -1,11 +1,24 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import {
   ScrollView,
+  Dimensions,
+  View,
 } from 'react-native';
+import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
   Header, ProfileHeader, ProfileInformation, ProfileButtons,
 } from '../features';
+import { Chit } from '../components';
 import { hostname } from '../config';
+
+const renderTabBar = (props) => (
+  <TabBar
+    {...props}
+    indicatorStyle={{ backgroundColor: '#FFD22F' }}
+    style={{ backgroundColor: '#8E8E8F' }}
+  />
+);
 
 class Profile extends Component {
   constructor() {
@@ -13,7 +26,15 @@ class Profile extends Component {
 
     this.state = {
       userData: {},
+      routes: [
+        { key: 'first', title: 'Recent Chits' },
+        { key: 'second', title: 'Profile Information' },
+      ],
+      index: 0,
+      loading: true,
     };
+
+    this.setIndex = this.setIndex.bind(this);
   }
 
 
@@ -42,24 +63,67 @@ class Profile extends Component {
         };
         this.setState({
           userData,
+          loading: false,
         });
       });
   }
 
 
+  setIndex(index) {
+    this.setState({
+      index,
+    });
+  }
+
   render() {
     const {
-      userId, signedInToken, signUserOut, switchToSettings,
+      userId, signedInToken, signUserOut, switchToSettings, forceCacheBust,
     } = this.props;
-    const { userData } = this.state;
+    const {
+      userData, routes, index, loading,
+    } = this.state;
 
-    return (
+    const initialLayout = { width: Dimensions.get('window').width };
+
+    const FirstRoute = () => (loading ? <ScrollView /> : (
       <ScrollView>
-        <Header />
-        <ProfileHeader userId={userId} signedInToken={signedInToken} signUserOut={signUserOut} userData={userData} />
+        {userData.recentChits.map(
+          ({
+            chit_content: text,
+            chit_id: id,
+            timestamp,
+          }) => (
+            <Chit key={id} firstName={userData.firstName} text={text} userId={userId} signedInToken={signedInToken} timestamp={timestamp} chitId={id} />
+          ),
+        )}
+      </ScrollView>
+    ));
+    const SecondRoute = () => (
+      <View>
         <ProfileInformation userData={userData} />
         <ProfileButtons signedInToken={signedInToken} signUserOut={signUserOut} switchToSettings={switchToSettings} />
-      </ScrollView>
+      </View>
+    );
+
+    const renderScene = SceneMap({
+      first: FirstRoute,
+      second: SecondRoute,
+    });
+
+    return (
+      <View style={{ flex: 1 }}>
+        <Header />
+        <ProfileHeader userId={userId} signedInToken={signedInToken} signUserOut={signUserOut} userData={userData} forceCacheBust={forceCacheBust} />
+        <TabView
+          navigationState={{ index, routes }}
+          renderTabBar={renderTabBar}
+          renderScene={renderScene}
+          onIndexChange={this.setIndex}
+          initialLayout={initialLayout}
+          style={{
+          }}
+        />
+      </View>
 
     );
   }

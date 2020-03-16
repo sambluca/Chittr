@@ -15,6 +15,7 @@ const { containerStyle, profilePictureStyle } = StyleSheet.create({
   profilePictureStyle: {
     borderColor: '#FFD22F',
     borderWidth: 3,
+    borderBottomWidth: 0,
     width: 180,
     height: 180,
     transform: [{ rotate: '90deg' }],
@@ -22,11 +23,11 @@ const { containerStyle, profilePictureStyle } = StyleSheet.create({
 });
 
 const ProfileHeader = ({
-  signedInToken, userId, userData,
+  signedInToken, userId, userData, forceCacheBust,
 }) => {
   const { firstName, lastName } = userData;
   const source = {
-    uri: `${hostname}/user/${userId}/photo?${Math.random()}`,
+    uri: `${hostname}/user/${userId}/photo?${forceCacheBust}`,
     method: 'GET',
     headers: {
       'Content-Type': 'image/jpeg',

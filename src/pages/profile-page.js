@@ -8,6 +8,7 @@ const ProfilePage = () => {
   const switchToSettings = () => {
     setSettings(!settings);
   };
+  const forceCacheBust = Math.random();
 
   return (
     <UserContextConsumer>
@@ -24,6 +25,7 @@ const ProfilePage = () => {
           signedInToken={signedInToken}
           signUserOut={signUserOut}
           switchToSettings={switchToSettings}
+          forceCacheBust={forceCacheBust}
         />
       ))}
     </UserContextConsumer>

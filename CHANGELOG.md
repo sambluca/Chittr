@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 0.9.0   | Recent chits on a users profile                                                        |
 | 0.8.1   | Delete commented out code                                                              |
 | 0.8.0   | Added home page chit feed                                                              |
 | 0.7.2   | Remove image from post new chit on button press                                        |
