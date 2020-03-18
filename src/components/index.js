@@ -5,6 +5,7 @@ import InputLabel from './inputLabel';
 import FormInput from './formInput';
 import CentreView from './centre-view';
 import Chit from './chit';
+import User from './user';
 
 export {
   TextLogo,
@@ -14,4 +15,5 @@ export {
   FormInput,
   CentreView,
   Chit,
+  User,
 };

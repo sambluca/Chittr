@@ -15,10 +15,19 @@ import {
   Search,
   Profile,
   PostChit,
+  UserProfile,
 } from './pages';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const SearchStack = createStackNavigator();
+
+const SearchScreenStack = () => (
+  <SearchStack.Navigator headerMode="none">
+    <SearchStack.Screen name="Search" component={Search} />
+    <SearchStack.Screen name="UserProfile" component={UserProfile} />
+  </SearchStack.Navigator>
+);
 
 const Chittr = () => (
   <Tab.Navigator
@@ -39,7 +48,7 @@ const Chittr = () => (
     />
     <Tab.Screen
       name="Search"
-      component={Search}
+      component={SearchScreenStack}
       options={{
         tabBarLabel: 'Search',
         tabBarIcon: ({ focused, size }) => (

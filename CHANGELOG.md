@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 0.10.0  | Search for users                                                                       |
 | 0.9.0   | Recent chits on a users profile                                                        |
 | 0.8.1   | Delete commented out code                                                              |
 | 0.8.0   | Added home page chit feed                                                              |

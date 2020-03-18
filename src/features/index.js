@@ -10,6 +10,8 @@ import ImageEdit from './image-edit';
 import Camera from './camera';
 import IconRow from './icon-row';
 import Chits from './chits';
+import SearchBar from './search-bar';
+import Users from './users';
 
 export {
   SignUpIdentifier,
@@ -24,4 +26,6 @@ export {
   Camera,
   IconRow,
   Chits,
+  SearchBar,
+  Users,
 };

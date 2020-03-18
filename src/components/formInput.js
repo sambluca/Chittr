@@ -9,11 +9,11 @@ const { textInputStyle } = StyleSheet.create({
     fontWeight: 'bold',
     paddingTop: 10,
     paddingBottom: 10,
-    width: 250,
+    width: 300,
     backgroundColor: '#FFFFFF',
     borderWidth: 1,
     borderRadius: 10,
-    borderColor: '#48BBEC',
+    borderColor: '#FFD22F',
   },
 });
 

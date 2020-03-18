@@ -1,18 +1,45 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+/* eslint-disable react/jsx-props-no-spreading */
+import React, { Component } from 'react';
+import {
+  View,
+} from 'react-native';
+import { Header, SearchBar, Users } from '../features';
 import { UserContextConsumer } from '../context/signedIn';
 
-const Search = () => (
-  <UserContextConsumer>
-    {({ userSignedIn }) => {
-      console.log('userSignedin', userSignedIn);
-      return (
-        <View>
-          <Text>Search</Text>
-        </View>
-      );
-    }}
-  </UserContextConsumer>
-);
+class Search extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      users: [],
+    };
+
+    this.setUsers = this.setUsers.bind(this);
+  }
+
+  setUsers(users) {
+    this.setState({
+      users,
+    });
+  }
+
+  render() {
+    const { navigation } = this.props;
+    const { users } = this.state;
+    return (
+      <UserContextConsumer>
+        {({ signedInToken }) => (
+          <View style={{ paddingBottom: 200 }}>
+            <Header />
+            <SearchBar setUsers={this.setUsers} signedInToken={signedInToken} />
+            <Users users={users} navigation={navigation} />
+          </View>
+        )}
+      </UserContextConsumer>
+
+
+    );
+  }
+}
 
 export default Search;

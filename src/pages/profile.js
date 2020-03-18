@@ -53,6 +53,7 @@ class Profile extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
+        console.log('here', res);
         const firstName = res.given_name;
         const lastName = res.family_name;
         const recentChits = res.recent_chits;
@@ -77,7 +78,7 @@ class Profile extends Component {
 
   render() {
     const {
-      userId, signedInToken, signUserOut, switchToSettings, forceCacheBust,
+      userId, signedInToken, signUserOut, switchToSettings, forceCacheBust, showProfileInformation = true,
     } = this.props;
     const {
       userData, routes, index, loading,
@@ -114,15 +115,18 @@ class Profile extends Component {
       <View style={{ flex: 1 }}>
         <Header />
         <ProfileHeader userId={userId} signedInToken={signedInToken} signUserOut={signUserOut} userData={userData} forceCacheBust={forceCacheBust} />
-        <TabView
-          navigationState={{ index, routes }}
-          renderTabBar={renderTabBar}
-          renderScene={renderScene}
-          onIndexChange={this.setIndex}
-          initialLayout={initialLayout}
-          style={{
-          }}
-        />
+
+        {showProfileInformation ? (
+          <TabView
+            navigationState={{ index, routes }}
+            renderTabBar={renderTabBar}
+            renderScene={renderScene}
+            onIndexChange={this.setIndex}
+            initialLayout={initialLayout}
+            style={{
+            }}
+          />
+        ) : (FirstRoute())}
       </View>
 
     );

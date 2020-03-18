@@ -6,6 +6,7 @@ import Loading from './loading';
 import Search from './search';
 import PostChit from './post-chit';
 import Profile from './profile-page';
+import UserProfile from './user-profile';
 
 
 export {
@@ -17,4 +18,5 @@ export {
   Search,
   PostChit,
   Profile,
+  UserProfile,
 };
