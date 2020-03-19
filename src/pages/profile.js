@@ -1,15 +1,14 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-import {
-  ScrollView,
-  Dimensions,
-  View,
-} from 'react-native';
+import { ScrollView, Dimensions, View, Text } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
-  Header, ProfileHeader, ProfileInformation, ProfileButtons,
+  Header,
+  ProfileHeader,
+  ProfileInformation,
+  ProfileButtons,
 } from '../features';
-import { Chit } from '../components';
+import { Chit, Button } from '../components';
 import { hostname } from '../config';
 
 const renderTabBar = (props) => (
@@ -32,14 +31,20 @@ class Profile extends Component {
       ],
       index: 0,
       loading: true,
+      following: false,
     };
 
     this.setIndex = this.setIndex.bind(this);
+    this.followUser = this.followUser.bind(this);
+    this.unfollowUser = this.unfollowUser.bind(this);
   }
 
-
   componentDidMount() {
+    const { following } = this.props;
     this.getUserData();
+    this.setState({
+      following,
+    });
   }
 
   getUserData() {
@@ -53,14 +58,17 @@ class Profile extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        console.log('here', res);
         const firstName = res.given_name;
         const lastName = res.family_name;
         const recentChits = res.recent_chits;
         const { email } = res;
 
         const userData = {
-          firstName, lastName, recentChits, email, userId,
+          firstName,
+          lastName,
+          recentChits,
+          email,
+          userId,
         };
         this.setState({
           userData,
@@ -69,40 +77,90 @@ class Profile extends Component {
       });
   }
 
-
   setIndex(index) {
     this.setState({
       index,
     });
   }
 
+  followUser() {
+    const {
+      getFollowing, userId, signedInToken,
+    } = this.props;
+    fetch(`${hostname}/user/${userId}/follow`, {
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': signedInToken,
+      },
+    }).then(() => {
+      getFollowing();
+      this.setState({
+        following: true,
+      });
+    });
+  }
+
+  unfollowUser() {
+    const {
+      getFollowing, userId, signedInToken,
+    } = this.props;
+    fetch(`${hostname}/user/${userId}/follow`, {
+      method: 'delete',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': signedInToken,
+      },
+    }).then(() => {
+      getFollowing();
+      this.setState({
+        following: false,
+      });
+    });
+  }
+
   render() {
     const {
-      userId, signedInToken, signUserOut, switchToSettings, forceCacheBust, showProfileInformation = true,
+      userId,
+      signedInToken,
+      signUserOut,
+      switchToSettings,
+      forceCacheBust,
+      showProfileInformation = true,
     } = this.props;
     const {
-      userData, routes, index, loading,
+      userData, routes, index, loading, following,
     } = this.state;
 
     const initialLayout = { width: Dimensions.get('window').width };
 
-    const FirstRoute = () => (loading ? <ScrollView /> : (
+    const FirstRoute = () => (loading ? (
+      <ScrollView />
+    ) : (
       <ScrollView>
-        {userData.recentChits.map(
-          ({
-            chit_content: text,
-            chit_id: id,
-            timestamp,
-          }) => (
-            <Chit key={id} firstName={userData.firstName} text={text} userId={userId} signedInToken={signedInToken} timestamp={timestamp} chitId={id} />
+        {userData.recentChits.length > 0 ? userData.recentChits.map(
+          ({ chit_content: text, chit_id: id, timestamp }) => (
+            <Chit
+              key={id}
+              firstName={userData.firstName}
+              text={text}
+              userId={userId}
+              signedInToken={signedInToken}
+              timestamp={timestamp}
+              chitId={id}
+            />
           ),
-        )}
+        ) : <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 25 }}>No Chits Posted Yet!</Text>}
       </ScrollView>
     ));
     const SecondRoute = () => (
       <View>
         <ProfileInformation userData={userData} />
-        <ProfileButtons signedInToken={signedInToken} signUserOut={signUserOut} switchToSettings={switchToSettings} />
+        <ProfileButtons
+          signedInToken={signedInToken}
+          signUserOut={signUserOut}
+          switchToSettings={switchToSettings}
+        />
       </View>
     );
 
@@ -114,8 +172,30 @@ class Profile extends Component {
     return (
       <View style={{ flex: 1 }}>
         <Header />
-        <ProfileHeader userId={userId} signedInToken={signedInToken} signUserOut={signUserOut} userData={userData} forceCacheBust={forceCacheBust} />
+        <ProfileHeader
+          userId={userId}
+          signedInToken={signedInToken}
+          signUserOut={signUserOut}
+          userData={userData}
+          forceCacheBust={forceCacheBust}
+        />
+        {!showProfileInformation && (
+          <View style={{
+            borderBottomColor: '#FFD22F',
+            borderBottomWidth: 1,
+            paddingVertical: 5,
+          }}
+          >
+            <View
+              style={{
+                marginLeft: 240,
+              }}
+            >
+              <Button width={100} buttonText={following ? 'Unfollow' : 'Follow'} onPress={following ? this.unfollowUser : this.followUser} />
+            </View>
+          </View>
 
+        )}
         {showProfileInformation ? (
           <TabView
             navigationState={{ index, routes }}
@@ -123,12 +203,12 @@ class Profile extends Component {
             renderScene={renderScene}
             onIndexChange={this.setIndex}
             initialLayout={initialLayout}
-            style={{
-            }}
+            style={{}}
           />
-        ) : (FirstRoute())}
+        ) : (
+          FirstRoute()
+        )}
       </View>
-
     );
   }
 }

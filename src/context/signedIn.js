@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import AsyncStorage from '@react-native-community/async-storage';
+import { hostname } from '../config';
 
 const { Provider, Consumer } = React.createContext();
 
@@ -16,6 +17,7 @@ const storeData = ({ signedInToken, userId }) => {
 };
 
 const removeData = () => AsyncStorage.removeItem('@Chittr:signedInToken');
+
 class UserContextProvider extends Component {
   constructor() {
     super();

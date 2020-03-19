@@ -54,7 +54,7 @@ const Chit = ({
   firstName, text, userId, signedInToken, timestamp, chitId,
 }) => {
   const profilePictureSource = {
-    uri: `${hostname}/user/${userId}/photo?${Math.random()}`,
+    uri: `${hostname}/user/${userId}/photo`,
     method: 'GET',
     headers: {
       'Content-Type': 'image/jpeg',

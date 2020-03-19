@@ -26,13 +26,14 @@ class Search extends Component {
   render() {
     const { navigation } = this.props;
     const { users } = this.state;
+
     return (
       <UserContextConsumer>
-        {({ signedInToken }) => (
+        {({ signedInToken, userId }) => (
           <View style={{ paddingBottom: 200 }}>
             <Header />
             <SearchBar setUsers={this.setUsers} signedInToken={signedInToken} />
-            <Users users={users} navigation={navigation} />
+            <Users users={users} navigation={navigation} userId={userId} />
           </View>
         )}
       </UserContextConsumer>

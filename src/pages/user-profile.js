@@ -1,22 +1,22 @@
 import React from 'react';
-import { View } from 'react-native';
 import { UserContextConsumer } from '../context/signedIn';
-import { Header, ProfileHeader } from '../features';
 
 import Profile from './profile';
 
 const ProfilePage = ({ route }) => {
-  const { params: userId } = route;
+  const { params: { userId, following, getFollowing } } = route;
   const forceCacheBust = Math.random();
 
   return (
     <UserContextConsumer>
       {({ signedInToken }) => (
         <Profile
-          userId={userId.userId}
+          userId={userId}
           signedInToken={signedInToken}
           forceCacheBust={forceCacheBust}
           showProfileInformation={false}
+          following={following}
+          getFollowing={getFollowing}
         />
       )}
     </UserContextConsumer>
