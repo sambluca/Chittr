@@ -21,12 +21,20 @@ import {
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const SearchStack = createStackNavigator();
+const ProfileStack = createStackNavigator();
 
 const SearchScreenStack = () => (
   <SearchStack.Navigator headerMode="none">
     <SearchStack.Screen name="Search" component={Search} />
     <SearchStack.Screen name="UserProfile" component={UserProfile} />
   </SearchStack.Navigator>
+);
+
+const ProfileScreenStack = () => (
+  <ProfileStack.Navigator headerMode="none">
+    <ProfileStack.Screen name="Profile" component={Profile} />
+    <ProfileStack.Screen name="UserProfile" component={UserProfile} />
+  </ProfileStack.Navigator>
 );
 
 const Chittr = () => (
@@ -58,7 +66,7 @@ const Chittr = () => (
     />
     <Tab.Screen
       name="Profile"
-      component={Profile}
+      component={ProfileScreenStack}
       options={{
         tabBarLabel: 'Profile',
         tabBarIcon: ({ focused, size }) => (

@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 0.12.0  | See followers and following                                                            |
 | 0.11.0  | Follow and unfollow users                                                              |
 | 0.10.0  | Search for users                                                                       |
 | 0.9.0   | Recent chits on a users profile                                                        |

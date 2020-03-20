@@ -44,6 +44,7 @@ class Chits extends PureComponent {
   render() {
     const { signedInToken } = this.props;
     const { chits, refreshing } = this.state;
+    const forceCacheBust = Math.random();
 
     return (
       <ScrollView
@@ -59,7 +60,7 @@ class Chits extends PureComponent {
             chit_id: id,
             timestamp,
           }) => (
-            <Chit key={id} firstName={firstName} text={text} userId={userId} signedInToken={signedInToken} timestamp={timestamp} chitId={id} />
+            <Chit key={id} firstName={firstName} text={text} userId={userId} signedInToken={signedInToken} timestamp={timestamp} chitId={id} forceCacheBust={forceCacheBust} />
           ),
         )}
       </ScrollView>

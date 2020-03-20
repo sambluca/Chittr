@@ -28,7 +28,7 @@ class SearchBar extends Component {
 
 
   searchForUser({ searchInput }) {
-    const { signedInToken, setUsers } = this.props;
+    const { signedInToken, setUsers, userId } = this.props;
 
     fetch(`${hostname}/search_user?q=${searchInput}`, {
       method: 'get',
@@ -39,7 +39,7 @@ class SearchBar extends Component {
     })
       .then((res) => res.json())
       .then((res) => {
-        const users = res;
+        const users = res.filter((user) => userId !== user.user_id);
         setUsers(users);
       }).catch(() => {
         setUsers([]);

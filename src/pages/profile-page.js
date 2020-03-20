@@ -3,7 +3,7 @@ import { UserContextConsumer } from '../context/signedIn';
 import Profile from './profile';
 import EditProfile from './edit-profile';
 
-const ProfilePage = () => {
+const ProfilePage = ({ navigation }) => {
   const [settings, setSettings] = useState(false);
   const switchToSettings = () => {
     setSettings(!settings);
@@ -26,6 +26,7 @@ const ProfilePage = () => {
           signUserOut={signUserOut}
           switchToSettings={switchToSettings}
           forceCacheBust={forceCacheBust}
+          navigation={navigation}
         />
       ))}
     </UserContextConsumer>

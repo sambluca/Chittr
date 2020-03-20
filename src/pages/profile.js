@@ -1,12 +1,15 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
-import { ScrollView, Dimensions, View, Text } from 'react-native';
+import {
+  ScrollView, Dimensions, View, Text,
+} from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
   Header,
   ProfileHeader,
   ProfileInformation,
   ProfileButtons,
+  Users,
 } from '../features';
 import { Chit, Button } from '../components';
 import { hostname } from '../config';
@@ -16,6 +19,18 @@ const renderTabBar = (props) => (
     {...props}
     indicatorStyle={{ backgroundColor: '#FFD22F' }}
     style={{ backgroundColor: '#8E8E8F' }}
+    renderLabel={({ route }) => (
+      <View>
+        <Text
+          style={{
+            fontSize: 11,
+            textAlign: 'center',
+          }}
+        >
+          {route.title}
+        </Text>
+      </View>
+    )}
   />
 );
 
@@ -25,13 +40,11 @@ class Profile extends Component {
 
     this.state = {
       userData: {},
-      routes: [
-        { key: 'first', title: 'Recent Chits' },
-        { key: 'second', title: 'Profile Information' },
-      ],
       index: 0,
       loading: true,
       following: false,
+      userFollowing: [],
+      userFollowers: [],
     };
 
     this.setIndex = this.setIndex.bind(this);
@@ -42,6 +55,8 @@ class Profile extends Component {
   componentDidMount() {
     const { following } = this.props;
     this.getUserData();
+    this.getFollowing();
+    this.getFollowers();
     this.setState({
       following,
     });
@@ -83,10 +98,39 @@ class Profile extends Component {
     });
   }
 
+  getFollowing() {
+    const { signedInToken, userId } = this.props;
+    fetch(`${hostname}/user/${userId}/following`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': signedInToken,
+      },
+    }).then((res) => res.json()).then((res) => {
+      this.setState({
+        userFollowing: res,
+      });
+    });
+  }
+
+
+  getFollowers() {
+    const { signedInToken, userId } = this.props;
+    fetch(`${hostname}/user/${userId}/followers`, {
+      method: 'get',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Authorization': signedInToken,
+      },
+    }).then((res) => res.json()).then((res) => {
+      this.setState({
+        userFollowers: res,
+      });
+    });
+  }
+
   followUser() {
-    const {
-      getFollowing, userId, signedInToken,
-    } = this.props;
+    const { getFollowing, userId, signedInToken } = this.props;
     fetch(`${hostname}/user/${userId}/follow`, {
       method: 'post',
       headers: {
@@ -102,9 +146,7 @@ class Profile extends Component {
   }
 
   unfollowUser() {
-    const {
-      getFollowing, userId, signedInToken,
-    } = this.props;
+    const { getFollowing, userId, signedInToken } = this.props;
     fetch(`${hostname}/user/${userId}/follow`, {
       method: 'delete',
       headers: {
@@ -127,33 +169,50 @@ class Profile extends Component {
       switchToSettings,
       forceCacheBust,
       showProfileInformation = true,
+      navigation,
+      reroute,
     } = this.props;
     const {
-      userData, routes, index, loading, following,
+      userData, index, loading, following, userFollowing, userFollowers,
     } = this.state;
 
+    if (reroute) {
+      this.getUserData();
+    }
     const initialLayout = { width: Dimensions.get('window').width };
 
     const FirstRoute = () => (loading ? (
       <ScrollView />
     ) : (
       <ScrollView>
-        {userData.recentChits.length > 0 ? userData.recentChits.map(
-          ({ chit_content: text, chit_id: id, timestamp }) => (
-            <Chit
-              key={id}
-              firstName={userData.firstName}
-              text={text}
-              userId={userId}
-              signedInToken={signedInToken}
-              timestamp={timestamp}
-              chitId={id}
-            />
-          ),
-        ) : <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 25 }}>No Chits Posted Yet!</Text>}
+        {userData.recentChits.length > 0 ? (
+          userData.recentChits.map(
+            ({ chit_content: text, chit_id: id, timestamp }) => (
+              <Chit
+                key={id}
+                firstName={userData.firstName}
+                text={text}
+                userId={userId}
+                signedInToken={signedInToken}
+                timestamp={timestamp}
+                chitId={id}
+              />
+            ),
+          )
+        ) : (
+          <Text
+            style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 25 }}
+          >
+            No Chits Posted Yet!
+          </Text>
+        )}
       </ScrollView>
     ));
-    const SecondRoute = () => (
+    const SecondRoute = () => (<Users users={userFollowing} navigation={navigation} userId={userId} />);
+
+    const ThirdRoute = () => (<Users users={userFollowers} navigation={navigation} userId={userId} />);
+
+    const FourthRoute = () => (
       <View>
         <ProfileInformation userData={userData} />
         <ProfileButtons
@@ -164,13 +223,29 @@ class Profile extends Component {
       </View>
     );
 
-    const renderScene = SceneMap({
+    let routes = [
+      { key: 'first', title: 'Chits' },
+      { key: 'second', title: 'Following' },
+      { key: 'third', title: 'Followers' },
+      { key: 'fourth', title: 'Edit' },
+    ];
+
+    const scene = {
       first: FirstRoute,
       second: SecondRoute,
-    });
+      third: ThirdRoute,
+      fourth: FourthRoute,
+    };
+
+    if (!showProfileInformation) {
+      delete scene.fourth;
+      routes = routes.filter((route) => route.key !== 'fourth');
+    }
+
+    const renderScene = SceneMap(scene);
 
     return (
-      <View style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1 }}>
         <Header />
         <ProfileHeader
           userId={userId}
@@ -180,23 +255,27 @@ class Profile extends Component {
           forceCacheBust={forceCacheBust}
         />
         {!showProfileInformation && (
-          <View style={{
-            borderBottomColor: '#FFD22F',
-            borderBottomWidth: 1,
-            paddingVertical: 5,
-          }}
+          <View
+            style={{
+              borderBottomColor: '#FFD22F',
+              borderBottomWidth: 1,
+              paddingVertical: 5,
+            }}
           >
             <View
               style={{
                 marginLeft: 240,
               }}
             >
-              <Button width={100} buttonText={following ? 'Unfollow' : 'Follow'} onPress={following ? this.unfollowUser : this.followUser} />
+              <Button
+                width={100}
+                buttonText={following ? 'Unfollow' : 'Follow'}
+                onPress={following ? this.unfollowUser : this.followUser}
+              />
             </View>
           </View>
-
         )}
-        {showProfileInformation ? (
+        {
           <TabView
             navigationState={{ index, routes }}
             renderTabBar={renderTabBar}
@@ -205,10 +284,8 @@ class Profile extends Component {
             initialLayout={initialLayout}
             style={{}}
           />
-        ) : (
-          FirstRoute()
-        )}
-      </View>
+        }
+      </ScrollView>
     );
   }
 }

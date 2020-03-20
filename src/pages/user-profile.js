@@ -3,7 +3,7 @@ import { UserContextConsumer } from '../context/signedIn';
 
 import Profile from './profile';
 
-const ProfilePage = ({ route }) => {
+const ProfilePage = ({ route, navigation }) => {
   const { params: { userId, following, getFollowing } } = route;
   const forceCacheBust = Math.random();
 
@@ -17,6 +17,7 @@ const ProfilePage = ({ route }) => {
           showProfileInformation={false}
           following={following}
           getFollowing={getFollowing}
+          navigation={navigation}
         />
       )}
     </UserContextConsumer>

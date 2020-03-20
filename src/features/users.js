@@ -5,40 +5,6 @@ import {
 import { User } from '../components';
 import { hostname } from '../config';
 
-// const Users = ({
-//   users, signedInToken, navigation,
-// }) => (
-//   <ScrollView>
-//     {users.length !== 0 ? (
-//       users.map(
-//         ({ given_name: firstName, family_name: lastName, user_id: currentUserId }) => (
-//           <TouchableOpacity
-//             key={currentUserId}
-//             onPress={() => {
-//               navigation.navigate('UserProfile', { userId: currentUserId });
-//             }}
-//           >
-//             <User
-//               signedInToken={signedInToken}
-//               firstName={firstName}
-//               lastName={lastName}
-//               userId={currentUserId}
-//             />
-//           </TouchableOpacity>
-//         ),
-//       )
-//     ) : (
-//       <Text>No Users Found Please Search Again</Text>
-//     )}
-//   </ScrollView>
-// );
-// export default Users;
-
-// import Users, {PureComponent} from 'react';
-// import {ScrollView, RefreshControl} from 'react-native';
-// import {hostname} from '../config';
-// import {Chit} from '../components';
-
 class Users extends PureComponent {
   constructor() {
     super();

@@ -32,7 +32,7 @@ class Search extends Component {
         {({ signedInToken, userId }) => (
           <View style={{ paddingBottom: 200 }}>
             <Header />
-            <SearchBar setUsers={this.setUsers} signedInToken={signedInToken} />
+            <SearchBar setUsers={this.setUsers} signedInToken={signedInToken} userId={userId} />
             <Users users={users} navigation={navigation} userId={userId} />
           </View>
         )}

@@ -51,10 +51,10 @@ const {
 });
 
 const Chit = ({
-  firstName, text, userId, signedInToken, timestamp, chitId,
+  firstName, text, userId, signedInToken, timestamp, chitId, forceCacheBust,
 }) => {
   const profilePictureSource = {
-    uri: `${hostname}/user/${userId}/photo`,
+    uri: `${hostname}/user/${userId}/photo?${forceCacheBust}`,
     method: 'GET',
     headers: {
       'Content-Type': 'image/jpeg',
