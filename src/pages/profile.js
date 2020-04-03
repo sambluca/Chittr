@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { Component } from 'react';
 import {
-  ScrollView, Dimensions, View, Text,
+  ScrollView, Dimensions, View, Text, RefreshControl,
 } from 'react-native';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
@@ -45,11 +45,13 @@ class Profile extends Component {
       following: false,
       userFollowing: [],
       userFollowers: [],
+      refreshing: false,
     };
 
     this.setIndex = this.setIndex.bind(this);
     this.followUser = this.followUser.bind(this);
     this.unfollowUser = this.unfollowUser.bind(this);
+    this.onRefresh = this.onRefresh.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +62,12 @@ class Profile extends Component {
     this.setState({
       following,
     });
+  }
+
+  onRefresh() {
+    this.getUserData();
+    this.getFollowing();
+    this.getFollowers();
   }
 
   getUserData() {
@@ -173,7 +181,7 @@ class Profile extends Component {
       reroute,
     } = this.props;
     const {
-      userData, index, loading, following, userFollowing, userFollowers,
+      userData, index, loading, following, userFollowing, userFollowers, refreshing,
     } = this.state;
 
     if (reroute) {
@@ -246,7 +254,12 @@ class Profile extends Component {
     const renderScene = SceneMap(scene);
 
     return (
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView
+        style={{ flex: 1 }}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={this.onRefresh} />
+    }
+      >
         <Header />
         <ProfileHeader
           userId={userId}

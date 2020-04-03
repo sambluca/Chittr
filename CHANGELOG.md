@@ -2,6 +2,7 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
+| 1.0.0  | Final Version                                                                           |
 | 0.14.0  | Drafts                                                                                 |
 | 0.13.1  | Change how location is displayed                                                       |
 | 0.13.0  | Add location to Chits                                                                  |
