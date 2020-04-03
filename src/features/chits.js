@@ -59,8 +59,9 @@ class Chits extends PureComponent {
             chit_content: text,
             chit_id: id,
             timestamp,
+            location = false,
           }) => (
-            <Chit key={id} firstName={firstName} text={text} userId={userId} signedInToken={signedInToken} timestamp={timestamp} chitId={id} forceCacheBust={forceCacheBust} />
+            <Chit key={id} firstName={firstName} text={text} userId={userId} signedInToken={signedInToken} timestamp={timestamp} chitId={id} forceCacheBust={forceCacheBust} location={location} />
           ),
         )}
       </ScrollView>

@@ -3,6 +3,7 @@ import {
   View, StyleSheet, TouchableOpacity, Text,
 } from 'react-native';
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const { containerStyle, buttonStyle } = StyleSheet.create({
   containerStyle: {
@@ -17,7 +18,9 @@ const { containerStyle, buttonStyle } = StyleSheet.create({
   },
 });
 
-const IconRow = ({ postChit, setCamera }) => (
+const IconRow = ({
+  postChit, setCamera, addLocation, locationAdded,
+}) => (
   <View style={containerStyle}>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
       <TouchableOpacity style={buttonStyle} onPress={setCamera}>
@@ -26,22 +29,24 @@ const IconRow = ({ postChit, setCamera }) => (
       <Text>Camera</Text>
     </View>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-      <TouchableOpacity style={buttonStyle}>
-        <CommunityIcon name="calendar" size={50} />
+      <TouchableOpacity style={buttonStyle} onPress={addLocation}>
+        <Icon name="add-location" size={50} color={locationAdded ? 'blue' : 'black'} />
       </TouchableOpacity>
-      <Text>Schedule</Text>
+      <Text>
+        Location
+      </Text>
+    </View>
+    <View style={{ flexDirection: 'column', alignItems: 'center' }}>
+      <TouchableOpacity style={buttonStyle} onPress={postChit}>
+        <CommunityIcon name="plus" size={50} />
+      </TouchableOpacity>
+      <Text>Post Chit</Text>
     </View>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
       <TouchableOpacity style={buttonStyle}>
         <CommunityIcon name="folder-edit" size={50} />
       </TouchableOpacity>
       <Text>Drafts</Text>
-    </View>
-    <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-      <TouchableOpacity style={buttonStyle} onPress={postChit}>
-        <CommunityIcon name="plus" size={50} />
-      </TouchableOpacity>
-      <Text>Post Tweet</Text>
     </View>
   </View>
 );

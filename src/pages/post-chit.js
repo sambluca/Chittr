@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  PermissionsAndroid,
 } from 'react-native';
 import CommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Geolocation from 'react-native-geolocation-service';
 import { Header, IconRow, Camera } from '../features';
 import { UserContextConsumer } from '../context/signedIn';
 import { hostname } from '../config';
@@ -22,6 +24,33 @@ const postPhoto = async ({ image, signedInToken, chitId }) => {
     body: image,
   });
 };
+
+const requestLocationPermission = async () => {
+  const alreadyGranted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
+  if (alreadyGranted) return true;
+
+  try {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+      {
+        title: 'Location Permission',
+        message: 'This app requires access to your location.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      return true;
+    }
+    return false;
+  } catch (err) {
+    console.warn(err);
+  }
+
+  return false;
+};
+
 
 const {
   containerStyle,
@@ -72,12 +101,19 @@ class NewChit extends Component {
         addedImage: false,
         imageUri: null,
       },
+      locationAdded: false,
+      location: '',
     };
 
     this.setInputValue = this.setInputValue.bind(this);
     this.postChit = this.postChit.bind(this);
     this.setCamera = this.setCamera.bind(this);
     this.onPictureTake = this.onPictureTake.bind(this);
+    this.findCoordinates = this.findCoordinates.bind(this);
+  }
+
+  componentDidMount() {
+    requestLocationPermission();
   }
 
   onPictureTake({ image, uri }) {
@@ -104,6 +140,35 @@ class NewChit extends Component {
     });
   }
 
+  findCoordinates = () => {
+    const { locationAdded } = this.state;
+    if (!locationAdded) {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          const location = JSON.stringify(position);
+          this.setState({
+            location,
+            locationAdded: !locationAdded,
+          });
+        },
+        (error) => {
+          console.log('err', error);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 20000,
+          maximumAge: 1000,
+        },
+      );
+    } else {
+      this.setState({
+        locationAdded: !locationAdded,
+        location: '',
+      });
+    }
+  };
+
+
   reset() {
     const { navigation } = this.props;
     this.setState({
@@ -119,22 +184,31 @@ class NewChit extends Component {
   }
 
   postChit({ signedInToken, userId }) {
-    const { inputValue } = this.state;
+    const { inputValue, location: locationString, locationAdded } = this.state;
     const date = new Date();
     const timestamp = date.getTime();
+    const chitBody = {
+      chit_content: inputValue,
+      timestamp,
+      user: {
+        user_id: userId,
+      },
+    };
+
+    if (locationAdded) {
+      const { coords: { longitude, latitude } } = JSON.parse(locationString);
+      const location = { longitude, latitude };
+      chitBody.location = location;
+    }
+
+
     fetch(`${hostname}/chits`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Authorization': signedInToken,
       },
-      body: JSON.stringify({
-        chit_content: inputValue,
-        timestamp,
-        user: {
-          user_id: userId,
-        },
-      }),
+      body: JSON.stringify(chitBody),
     })
       .then((res) => res.json())
       .then((res) => {
@@ -151,11 +225,19 @@ class NewChit extends Component {
       });
   }
 
+  // addLocation() {
+  //   const { locationAdded } = this.state;
+  //   this.setState({
+  //     locationAdded: !locationAdded,
+  //   });
+  // }
+
   render() {
     const {
       inputValue,
       showCamera,
       image: { imageUri, addedImage },
+      locationAdded,
     } = this.state;
 
     return (
@@ -200,6 +282,8 @@ class NewChit extends Component {
               <IconRow
                 postChit={() => this.postChit({ signedInToken, userId })}
                 setCamera={this.setCamera}
+                addLocation={this.findCoordinates}
+                locationAdded={locationAdded}
               />
             </View>
           </ScrollView>

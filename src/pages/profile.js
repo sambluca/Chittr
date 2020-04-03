@@ -196,6 +196,7 @@ class Profile extends Component {
                 signedInToken={signedInToken}
                 timestamp={timestamp}
                 chitId={id}
+                forceCacheBust={forceCacheBust}
               />
             ),
           )

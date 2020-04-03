@@ -51,7 +51,7 @@ const {
 });
 
 const Chit = ({
-  firstName, text, userId, signedInToken, timestamp, chitId, forceCacheBust,
+  firstName, text, userId, signedInToken, timestamp, chitId, forceCacheBust, location,
 }) => {
   const profilePictureSource = {
     uri: `${hostname}/user/${userId}/photo?${forceCacheBust}`,
@@ -85,6 +85,7 @@ const Chit = ({
         <Text style={nameStyle}>{firstName}</Text>
         <Text style={chitStyle}>{text}</Text>
         <Image style={chitPictureStyle} key={chitPictureSource.uri} source={chitPictureSource} />
+        {location && <Text style={chitStyle}>{JSON.stringify(location)}</Text>}
       </View>
     </View>
   );
