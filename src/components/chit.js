@@ -85,7 +85,12 @@ const Chit = ({
         <Text style={nameStyle}>{firstName}</Text>
         <Text style={chitStyle}>{text}</Text>
         <Image style={chitPictureStyle} key={chitPictureSource.uri} source={chitPictureSource} />
-        {location && <Text style={chitStyle}>{JSON.stringify(location)}</Text>}
+        {location && (
+        <View>
+          <Text style={chitStyle}>{`Latitude: ${location.latitude}`}</Text>
+          <Text style={chitStyle}>{`Longitude: ${location.longitude}`}</Text>
+        </View>
+        )}
       </View>
     </View>
   );
