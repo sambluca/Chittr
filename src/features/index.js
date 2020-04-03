@@ -12,6 +12,7 @@ import IconRow from './icon-row';
 import Chits from './chits';
 import SearchBar from './search-bar';
 import Users from './users';
+import Draft from './draft';
 
 export {
   SignUpIdentifier,
@@ -28,4 +29,5 @@ export {
   Chits,
   SearchBar,
   Users,
+  Draft,
 };

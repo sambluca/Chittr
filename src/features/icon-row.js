@@ -19,7 +19,7 @@ const { containerStyle, buttonStyle } = StyleSheet.create({
 });
 
 const IconRow = ({
-  postChit, setCamera, addLocation, locationAdded,
+  postChit, setCamera, addLocation, locationAdded, goToDrafts,
 }) => (
   <View style={containerStyle}>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
@@ -43,7 +43,7 @@ const IconRow = ({
       <Text>Post Chit</Text>
     </View>
     <View style={{ flexDirection: 'column', alignItems: 'center' }}>
-      <TouchableOpacity style={buttonStyle}>
+      <TouchableOpacity style={buttonStyle} onPress={goToDrafts}>
         <CommunityIcon name="folder-edit" size={50} />
       </TouchableOpacity>
       <Text>Drafts</Text>

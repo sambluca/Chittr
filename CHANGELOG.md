@@ -2,7 +2,8 @@
 
 | Version | Description                                                                            |
 | ------- | -------------------------------------------------------------------------------------- |
-| 0.13.1  | Change how location is displayed                                                        |
+| 0.14.0  | Drafts                                                                                 |
+| 0.13.1  | Change how location is displayed                                                       |
 | 0.13.0  | Add location to Chits                                                                  |
 | 0.12.0  | See followers and following                                                            |
 | 0.11.0  | Follow and unfollow users                                                              |

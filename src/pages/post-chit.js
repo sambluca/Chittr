@@ -240,6 +240,7 @@ class NewChit extends Component {
       locationAdded,
     } = this.state;
 
+    const { navigation } = this.props;
     return (
       <UserContextConsumer>
         {({ userId, signedInToken }) => (showCamera ? (
@@ -284,6 +285,7 @@ class NewChit extends Component {
                 setCamera={this.setCamera}
                 addLocation={this.findCoordinates}
                 locationAdded={locationAdded}
+                goToDrafts={() => navigation.navigate('Drafts')}
               />
             </View>
           </ScrollView>

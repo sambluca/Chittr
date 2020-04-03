@@ -16,12 +16,14 @@ import {
   Profile,
   PostChit,
   UserProfile,
+  Drafts,
 } from './pages';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 const SearchStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
+const PostStack = createStackNavigator();
 
 const SearchScreenStack = () => (
   <SearchStack.Navigator headerMode="none">
@@ -37,6 +39,12 @@ const ProfileScreenStack = () => (
   </ProfileStack.Navigator>
 );
 
+const PostChitStack = () => (
+  <PostStack.Navigator headerMode="none">
+    <PostStack.Screen name="PostChit" component={PostChit} />
+    <PostStack.Screen name="Drafts" component={Drafts} />
+  </PostStack.Navigator>
+);
 const Chittr = () => (
   <Tab.Navigator
     initialRouteName="ChitFeed"
@@ -76,7 +84,7 @@ const Chittr = () => (
     />
     <Tab.Screen
       name="Post Chit"
-      component={PostChit}
+      component={PostChitStack}
       options={{
         tabBarLabel: 'Post Chit',
         tabBarIcon: ({ focused, size }) => (

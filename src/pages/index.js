@@ -7,6 +7,7 @@ import Search from './search';
 import PostChit from './post-chit';
 import Profile from './profile-page';
 import UserProfile from './user-profile';
+import Drafts from './drafts';
 
 
 export {
@@ -19,4 +20,5 @@ export {
   PostChit,
   Profile,
   UserProfile,
+  Drafts,
 };
